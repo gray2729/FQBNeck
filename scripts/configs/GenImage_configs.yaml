@@ -1,0 +1,10 @@
+train_dir: "datasets/GenImage/Training"
+val_dir: "datasets/GenImage/Validation"
+test_dir: "datasets/GenImage/Testing"
+
+batch_size: 32
+image_size: 224
+num_workers: 4
+epochs: 20
+lr: 1e-4
+beta: 1e-3

@@ -1,0 +1,10 @@
+train_dir: "datasets/Hybrid/Training"
+val_dir: "datasets/Hybrid/Validation"
+test_dir: "datasets/Hybrid/Testing"
+
+batch_size: 32
+image_size: 224
+num_workers: 4
+epochs: 20
+lr: 1e-4
+beta: 1e-3
