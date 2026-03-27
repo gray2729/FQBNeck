@@ -80,6 +80,7 @@ def main():
     #Either do training or testing
     if args.process == "training":
         model = FQBNeck()
+        model = model.to(DEVICE)
         optimizer = optim.Adam(model.parameters(), lr=LR)
         
         print(f"Training {args.model_name}")
@@ -101,6 +102,7 @@ def main():
     elif args.process == "testing":
         print(f"Testing {args.model_name}")
         model = torch.load(file_path, weights_only=False)
+        model = model.to(DEVICE)
         results = test_model(model, test_loader, DEVICE)
         
     #Show and save results
