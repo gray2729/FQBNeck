@@ -13,8 +13,7 @@ class ImageData(Dataset):
 
         self.transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
-            transforms.Lambda(lambda img: img.convert("RGB")),
-            transforms.ToTensor(),
+            transforms.ConvertImageDtype(torch.float32),
             transforms.Normalize(
                 mean=[0.5, 0.5, 0.5],
                 std=[0.5, 0.5, 0.5]
