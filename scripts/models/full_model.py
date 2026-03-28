@@ -13,7 +13,7 @@ class FQBNeck(nn.Module):
         self.fft = FFT()
         self.rgb_cnn = CNN(input_channel=3, out_channel=feature_dim)
         self.fft_cnn = CNN(input_channel=6, out_channel=feature_dim)
-        self.vib = VIB(feature_dim, latent_dim)
+        self.vib = VIB(feature_dim*2, latent_dim)
         self.mlp = MLP(latent_dim, num_class)
         
     def forward(self, x):
