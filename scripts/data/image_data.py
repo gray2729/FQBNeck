@@ -1,8 +1,9 @@
 import os
 import torch
 from torch.utils.data import Dataset
-from torchvision.io import read_image
+#from torchvision.io import read_image
 from torchvision import transforms
+from PIL import Image
 
 class ImageData(Dataset):
     def __init__(self, root_dir, image_size=256):
@@ -13,7 +14,7 @@ class ImageData(Dataset):
 
         self.transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
-            transforms.ConvertImageDtype(torch.float32)
+            #transforms.ConvertImageDtype(torch.float32)
         ])
 
     def load_paths(self):
@@ -34,14 +35,18 @@ class ImageData(Dataset):
     def __getitem__(self, idx):
         path, label = self.samples[idx]
 
-        # load image as tensor [C, H, W]
-        img = read_image(path)
+        # load image as tensor
+        #img = read_image(path)
         
-        if img.shape[0] == 4:
-            img = img[:3, :, :]
+        with Image.open(path) as img:
+            img = img.convert("RGB")
+        
+        img = transforms.functional.to_tensor(img)
+        #if img.shape[0] == 4:
+        #    img = img[:3, :, :]
             
-        if img.shape[0] == 1:
-            img = img.repeat(3, 1, 1)
+        #if img.shape[0] == 1:
+        #    img = img.repeat(3, 1, 1)
 
         # apply transforms
         img = self.transform(img)
