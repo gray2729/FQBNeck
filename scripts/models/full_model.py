@@ -17,7 +17,6 @@ class FQBNeck(nn.Module):
     def forward(self, x):
         x = self.fft(x)
         features = self.cnn(x)
-        features = self.proj_layer(features)
         
         z, mu, logvar = self.vib(features)
         logits = self.mlp(z)
