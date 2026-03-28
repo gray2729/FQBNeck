@@ -87,10 +87,10 @@ def main():
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
             train_loss = train_model(model, train_loader, optimizer, DEVICE, BETA)
-            val_acc = validate_model(model, val_loader, DEVICE)
+            val_loss, val_acc = validate_model(model, val_loader, DEVICE)
             
-            print(f"Epoch {epoch}: Training loss = {train_loss}, Validation Accuracy = {val_acc}")
-            #logger.save_losses(epoch, train_loss, val_acc)
+            print(f"Epoch {epoch}: Training loss = {train_loss}, Validation Loss = {val_loss}, Validation Accuracy = {val_acc}")
+            #logger.save_losses(epoch, train_loss, val_loss, val_acc)
             
         #Save model and training / validation loss data
         print(f"Saving model as {args.model_name}.pt")

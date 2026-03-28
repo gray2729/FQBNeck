@@ -19,8 +19,8 @@ class result_logger:
         self.save_path = folder_path / "losses.csv"
         
         with open(self.save_path, "w", newline = "") as file:
-            csv.writer(file).writerow(["epoch", "train_loss", "val_acc"])
+            csv.writer(file).writerow(["epoch", "train_loss", "val_loss", "val_acc"])
             
-    def save_losses(self, epoch, train_loss, val_acc):
+    def save_losses(self, epoch, train_loss, val_loss, val_acc):
         with open(self.save_path, "a", newline = "") as file:
-            csv.writer(file).writerow([epoch, train_loss, val_acc])
+            csv.writer(file).writerow([epoch, train_loss, val_loss, val_acc])
