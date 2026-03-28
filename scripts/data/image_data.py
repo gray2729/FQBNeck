@@ -13,9 +13,7 @@ class ImageData(Dataset):
         self.samples = self.load_paths()
 
         self.transform = transforms.Compose([
-            transforms.Resize((image_size, image_size)),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomCrop(image_size, padding=16)
+            transforms.Resize((image_size, image_size))
         ])
 
     def load_paths(self):
