@@ -1,12 +1,12 @@
 import torch.nn as nn
 
 class CNN(nn.Module):
-    def __init__(self, out_channel=256):
+    def __init__(self, input_channel = 6, out_channel=256):
         super().__init__()
         
         self.features = nn.Sequential(
             #Layer collection 1
-            nn.Conv2d(6, 32, kernel_size=3, padding=1),
+            nn.Conv2d(input_channel, 32, kernel_size=3, padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2),

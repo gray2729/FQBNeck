@@ -11,14 +11,15 @@ class FQBNeck(nn.Module):
         super().__init__()
         
         self.fft = FFT()
-        self.cnn = CNN(feature_dim)
+        self.rgb_cnn = CNN(input_channel=3, out_channel=feature_dim)
+        self.fft_cnn = CNN(input_channel=6, out_channel=feature_dim)
         self.vib = VIB(feature_dim, latent_dim)
         self.mlp = MLP(latent_dim, num_class)
         
     def forward(self, x):
         #x = self.fft(x)
-        rgb_features = self.cnn(x)
-        fft_features = self.cnn(self.fft(x))
+        rgb_features = self.rgb_cnn(x)
+        fft_features = self.fft_cnn(self.fft(x))
         
         features = torch.cat([fft_features, rgb_features], dim=1)
         
