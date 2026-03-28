@@ -15,6 +15,8 @@ class FQBNeck(nn.Module):
         #self.vib = VIB(feature_dim, latent_dim)
         
         self.ResNet = ResNet()
+        self.proj_layer = nn.Linear(2048, 512)
+        
         self.vib = VIB(512, latent_dim)
         self.mlp = MLP(latent_dim, num_class)
         
@@ -22,6 +24,8 @@ class FQBNeck(nn.Module):
         x = self.fft(x)
         #features = self.cnn(x)
         features = self.ResNet(x)
+        features = self.proj_layer(features)
+        
         z, mu, logvar = self.vib(features)
         logits = self.mlp(z)
         
