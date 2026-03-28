@@ -1,3 +1,4 @@
+import torch
 import torch.nn as nn
 
 from .fft import FFT
@@ -15,8 +16,11 @@ class FQBNeck(nn.Module):
         self.mlp = MLP(latent_dim, num_class)
         
     def forward(self, x):
-        x = self.fft(x)
-        features = self.cnn(x)
+        #x = self.fft(x)
+        rgb_features = self.cnn(x)
+        fft_features = self.cnn(self.fft(x))
+        
+        features = torch.cat([fft_features, rgb_features], dim=1)
         
         z, mu, logvar = self.vib(features)
         logits = self.mlp(z)

@@ -6,7 +6,7 @@ class CNN(nn.Module):
         
         self.features = nn.Sequential(
             #Layer collection 1
-            nn.Conv2d(3, 32, kernel_size=3, padding=1),
+            nn.Conv2d(6, 32, kernel_size=3, padding=1),
             nn.BatchNorm2d(32),
             nn.ReLU(),
             nn.MaxPool2d(2),
