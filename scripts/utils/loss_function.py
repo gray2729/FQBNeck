@@ -6,6 +6,6 @@ def VIB_loss(logits, target, mu, logvar, beta=0.001):
     
     #kl divergence
     kl_div = -0.5 * (1 + logvar - mu.pow(2) - logvar.exp())
-    kl_div = kl_div.mean()
+    kl_div = kl_div.sum(dim=1).mean()
     
     return ce_loss + beta * kl_div

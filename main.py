@@ -78,9 +78,10 @@ def main():
     
     #Either do training or testing
     if args.process == "training":
-        model = FQBNeck()
+        model = FQBNeck(feature_dim=256, lantent_dim=256)
         model = model.to(DEVICE)
         optimizer = optim.Adam(model.parameters(), lr=LR)
+        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
         
         #logger = result_logger(results_path)
         
@@ -88,6 +89,7 @@ def main():
         for epoch in range(EPOCHS):
             train_loss = train_model(model, train_loader, optimizer, DEVICE, BETA)
             val_loss, val_acc = validate_model(model, val_loader, DEVICE)
+            scheduler.step()
             
             print(f"Epoch {epoch}: Train. loss = {train_loss}, Val. Loss = {val_loss}, Val. Accuracy = {val_acc}")
             #logger.save_losses(epoch, train_loss, val_loss, val_acc)

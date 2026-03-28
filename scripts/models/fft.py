@@ -8,21 +8,18 @@ class FFT(nn.Module):
         
     def forward(self, x):
         fft = torch.fft.fft2(x)
-        #fft_shift = torch.fft.fftshift(fft) 
+        fft_shift = torch.fft.fftshift(fft) 
         #magnitude = torch.log(torch.abs(fft_shift) + 1)
         
-        #normalize
-        #mu = magnitude.mean(dim=[1, 2, 3], keepdim = True)
-        #std = magnitude.std(dim=[1, 2, 3], keepdim = True)
-        
-        #magnitude = (magnitude-mu)/(std + 1e-8)
-        #magnitude = self.bn(magnitude)
-        
-        real = fft.real
-        imag = fft.imag
+        real = fft_shift.real
+        imag = fft_shift.imag
 
         x = torch.cat([real, imag], dim=1)
         
-        magnitude = (x - x.mean(dim=[2,3], keepdim=True)) / (x.std(dim=[2,3], keepdim=True) + 1e-6)
+        #normalize
+        mu = x.mean(dim=[2, 3], keepdim = True)
+        std = x.std(dim=[2, 3], keepdim = True)
+        
+        magnitude = (x-mu)/(std + 1e-6)
         
         return magnitude
