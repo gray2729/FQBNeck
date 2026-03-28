@@ -78,7 +78,7 @@ def main():
     
     #Either do training or testing
     if args.process == "training":
-        model = FQBNeck(feature_dim=256, lantent_dim=256)
+        model = FQBNeck(feature_dim=256, latent_dim=256)
         model = model.to(DEVICE)
         optimizer = optim.Adam(model.parameters(), lr=LR)
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
