@@ -12,6 +12,7 @@ class VIB(nn.Module):
         #get distribution parameters
         mu = self.mu(x)
         logvar = self.logvar(x)
+        logvar = torch.clamp(logvar, -10, 10)
         
         #compute std
         std = torch.exp(0.5 * logvar)
