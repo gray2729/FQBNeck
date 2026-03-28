@@ -14,7 +14,6 @@ class ImageData(Dataset):
 
         self.transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
-            #transforms.ConvertImageDtype(torch.float32)
         ])
 
     def load_paths(self):
@@ -35,18 +34,11 @@ class ImageData(Dataset):
     def __getitem__(self, idx):
         path, label = self.samples[idx]
 
-        # load image as tensor
-        #img = read_image(path)
-        
+        # load image as tensor        
         with Image.open(path) as img:
             img = img.convert("RGB")
         
         img = transforms.functional.to_tensor(img)
-        #if img.shape[0] == 4:
-        #    img = img[:3, :, :]
-            
-        #if img.shape[0] == 1:
-        #    img = img.repeat(3, 1, 1)
 
         # apply transforms
         img = self.transform(img)
