@@ -11,6 +11,8 @@ def validate_model(model, val_loader, device):
             
             logits, _, _ = model(imgs)
             preds = logits.argmax(dim=1)
+            print("Probs sample:", probs[:5])         # should NOT be all [0.5, 0.5]
+            print("Pred distribution:", logits.argmax(dim=1).float().mean().item())
             
             correct += (preds == labels).sum().item()
             total += labels.size(0)

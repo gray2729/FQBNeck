@@ -11,6 +11,9 @@ def train_model(model, train_loader, optimizer, device, beta = 0.001):
         logits, mu, logvar = model(imgs)
         loss = VIB_loss(logits, labels, mu, logvar, beta)
         loss.backward()
+        for name, param in model.named_parameters():
+            if param.grad is not None:
+                print(f"{name}: grad norm = {param.grad.norm().item():.6f}")
         optimizer.step()
         
         total_loss += loss.item()

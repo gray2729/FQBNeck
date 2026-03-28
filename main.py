@@ -62,7 +62,7 @@ def main():
     
     #Set file paths
     file_path = Path(f"saved_models/{args.model_name}.pt")
-    results_path = create_directory(args.model_name)
+    #results_path = create_directory(args.model_name)
     
     #Load image data
     config_path = Path(f"scripts/configs/{args.dataset}_configs.yaml")
@@ -74,7 +74,7 @@ def main():
     LR = config["lr"]
     BETA = config["beta"]
     
-    save_configs(config_path, results_path)
+    #save_configs(config_path, results_path)
     
     #Either do training or testing
     if args.process == "training":
@@ -82,7 +82,7 @@ def main():
         model = model.to(DEVICE)
         optimizer = optim.Adam(model.parameters(), lr=LR)
         
-        logger = result_logger(results_path)
+        #logger = result_logger(results_path)
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
@@ -90,11 +90,11 @@ def main():
             val_acc = validate_model(model, val_loader, DEVICE)
             
             print(f"Epoch {epoch}: Training loss = {train_loss}, Validation Accuracy = {val_acc}")
-            logger.save_losses(epoch, train_loss, val_acc)
+            #logger.save_losses(epoch, train_loss, val_acc)
             
         #Save model and training / validation loss data
         print(f"Saving model as {args.model_name}.pt")
-        torch.save(model, file_path)
+        #torch.save(model, file_path)
         
         #Test model
         print(f"Testing {args.model_name}")
@@ -110,7 +110,7 @@ def main():
     for k, v in results.items():
         print(f"{k}: {v:.4f}")
         
-    save_metrics(results, results_path)
+    #save_metrics(results, results_path)
     
 if __name__ == "__main__":
     main()
