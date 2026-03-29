@@ -107,7 +107,7 @@ def main():
             
             scheduler.step()
             
-            print(f"Epoch {epoch}: Train. loss = {train_loss:.4f}, Train. acc = {train_acc:.4f}, Val. loss = {val_loss:.4f}, Val. acc = {val_acc:.4f}")
+            print(f"Epoch {epoch+1}: Train. loss = {train_loss:.4f}, Train. acc = {train_acc:.4f}, Val. loss = {val_loss:.4f}, Val. acc = {val_acc:.4f}")
             logger.save_losses(epoch, train_loss, train_acc, val_loss, val_acc)
             
             if val_loss < best_val_loss:

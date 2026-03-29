@@ -2,3 +2,5 @@ ForenSyth/
 GenImage/
 Hybrid/
 Hybrid_Sample/
+__pycache__/
+*.pyc
