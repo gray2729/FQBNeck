@@ -4,6 +4,7 @@ def train_model(model, train_loader, optimizer, device, beta = 0.001):
     model.train()
     total_loss = 0
     correct = 0
+    samples = 0
     
     for imgs, labels in train_loader:
         imgs, labels = imgs.to(device), labels.to(device)
@@ -19,6 +20,7 @@ def train_model(model, train_loader, optimizer, device, beta = 0.001):
         
         total_loss += loss.item()
         correct += (preds == labels).sum().item()
+        samples += labels.size(0)
         
-    return total_loss / len(train_loader), correct / len(train_loader)
+    return total_loss / len(train_loader), correct / samples
         
