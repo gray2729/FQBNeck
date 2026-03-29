@@ -87,7 +87,7 @@ def main():
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
-            beta = min(BETA, epoch / 10 * BETA)
+            beta = min(BETA, epoch / int(0.4*EPOCHS) * BETA)
             train_loss, train_acc = train_model(model, train_loader, optimizer, DEVICE, beta)
             val_loss, val_acc = validate_model(model, val_loader, DEVICE)
             scheduler.step()
