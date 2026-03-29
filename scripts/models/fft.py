@@ -9,17 +9,20 @@ class FFT(nn.Module):
     def forward(self, x):
         fft = torch.fft.fft2(x)
         fft_shift = torch.fft.fftshift(fft) 
-        #magnitude = torch.log(torch.abs(fft_shift) + 1)
         
-        real = fft_shift.real
-        imag = fft_shift.imag
+        magnitude = torch.log(torch.abs(fft_shift) + 1)
+        phase = torch.angle(fft)
+        
+        #real = fft_shift.real
+        #imag = fft_shift.imag
 
-        x = torch.cat([real, imag], dim=1)
+        #x = torch.cat([real, imag], dim=1)
+        x = torch.cat([magnitude, phase], dim=1)
         
         #normalize
         mu = x.mean(dim=[2, 3], keepdim = True)
         std = x.std(dim=[2, 3], keepdim = True)
         
-        magnitude = (x-mu)/(std + 1e-6)
+        x = (x-mu)/(std + 1e-6)
         
-        return magnitude
+        return x
