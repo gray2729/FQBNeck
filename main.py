@@ -34,9 +34,9 @@ def create_directory(model_name):
             break
         except FileExistsError:
             if index:
-                index = '('+str(int(index[1:-1])+1)+')'
+                index = "("+str(int(index[1:-1])+1)+")"
             else:
-                index = '(1)'
+                index = "(1)"
             pass
     
     results_path = Path(f"results/{model_name}"+index)
@@ -48,6 +48,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dataset", type=str, required=True, 
                         help="dataset name")
+    parser.add_argument("--config", type=str, required=True, 
+                        help="config name")
     parser.add_argument("--process", type=str, required=True,
                         choices=[
                             "training",
@@ -60,47 +62,62 @@ def main():
     
     set_seed(args.seed)
     
+    #set dataset path
+    dataset_path = Path(f"datasets/{args.dataset}")
+    
     #Set file paths
     file_path = Path(f"saved_models/{args.model_name}.pt")
-    #results_path = create_directory(args.model_name)
+    results_path = create_directory(args.model_name)
     
     #Load image data
-    config_path = Path(f"scripts/configs/{args.dataset}_configs.yaml")
+    config_path = Path(f"scripts/configs/{args.config}.yaml")
     with open(config_path) as file:
         config = yaml.safe_load(file)
     
-    train_loader, val_loader, test_loader = create_loaders(config)
-    EPOCHS = config["epochs"]
-    LR = config["lr"]
-    BETA = config["beta"]
-    
-    #save_configs(config_path, results_path)
+    train_loader, val_loader, test_loader = create_loaders(config, dataset_path)
     
     #Either do training or testing
     if args.process == "training":
-        model = FQBNeck(feature_dim=256, latent_dim=256)
+        EPOCHS = config["epochs"]
+        LR = config["lr"]
+        BETA = config["beta"]
+        
+        save_configs(config_path, results_path)
+        
+        logger = result_logger(results_path)
+        best_val_loss = float('inf')
+        
+        if file_path.exists():
+            print(f"Model found, loading {args.model_name}")
+            model = torch.load(file_path, weights_only=False)
+        else:   
+            model = FQBNeck(feature_dim=256, latent_dim=256)
+            
         model = model.to(DEVICE)
+        
         optimizer = optim.Adam(model.parameters(), lr=LR)
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
-        
-        #logger = result_logger(results_path)
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
             beta = min(BETA, epoch / int(0.4*EPOCHS) * BETA)
+            
             train_loss, train_acc = train_model(model, train_loader, optimizer, DEVICE, beta)
             val_loss, val_acc = validate_model(model, val_loader, DEVICE)
+            
             scheduler.step()
             
             print(f"Epoch {epoch}: Train. loss = {train_loss:.4f}, Train. acc = {train_acc:.4f}, Val. loss = {val_loss:.4f}, Val. acc = {val_acc:.4f}")
-            #logger.save_losses(epoch, train_loss, train_acc, val_loss, val_acc)
+            logger.save_losses(epoch, train_loss, train_acc, val_loss, val_acc)
             
-        #Save model and training / validation loss data
-        print(f"Saving model as {args.model_name}.pt")
-        #torch.save(model, file_path)
+            if val_loss < best_val_loss:
+                best_val_loss = val_loss
+                torch.save(model, file_path)
         
         #Test model
         print(f"Testing {args.model_name}")
+        model = torch.load(file_path, weights_only=False)
+        model = model.to(DEVICE)
         results = test_model(model, test_loader, DEVICE)
         
     elif args.process == "testing":
@@ -113,7 +130,7 @@ def main():
     for k, v in results.items():
         print(f"{k}: {v:.4f}")
         
-    #save_metrics(results, results_path)
+    save_metrics(results, results_path)
     
 if __name__ == "__main__":
     main()
