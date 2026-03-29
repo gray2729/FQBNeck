@@ -87,11 +87,11 @@ def main():
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
-            train_loss = train_model(model, train_loader, optimizer, DEVICE, BETA)
+            train_loss, train_acc = train_model(model, train_loader, optimizer, DEVICE, BETA)
             val_loss, val_acc = validate_model(model, val_loader, DEVICE)
             scheduler.step()
             
-            print(f"Epoch {epoch}: Train. loss = {train_loss}, Val. Loss = {val_loss}, Val. Accuracy = {val_acc}")
+            print(f"Epoch {epoch}: Train. loss = {train_loss:.4f}, Train. acc = {train_acc:.4f}, Val. loss = {val_loss:.4f}, Val. acc = {val_acc:.4f}")
             #logger.save_losses(epoch, train_loss, val_loss, val_acc)
             
         #Save model and training / validation loss data
