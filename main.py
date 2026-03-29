@@ -88,7 +88,7 @@ def main():
         best_val_loss = float('inf')
         
         if file_path.exists():
-            print(f"Model found, loading {args.model_name}")
+            print(f"Model found, loading {args.model_name}.pt")
             model = torch.load(file_path, weights_only=False)
         else:   
             model = FQBNeck(feature_dim=256, latent_dim=256)
@@ -111,6 +111,7 @@ def main():
             logger.save_losses(epoch, train_loss, train_acc, val_loss, val_acc)
             
             if val_loss < best_val_loss:
+                print (f"New best: {val_loss:.4f}, saving model as {args.model_name}.pt")
                 best_val_loss = val_loss
                 torch.save(model, file_path)
         
