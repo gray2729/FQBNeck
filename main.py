@@ -89,11 +89,10 @@ def main():
         
         if file_path.exists():
             print(f"Model found, loading {args.model_name}.pt")
-            model = torch.load(file_path, weights_only=False)
+            model = torch.load(file_path, weights_only=False, map_location=DEVICE)
         else:   
-            model = FQBNeck(feature_dim=256, latent_dim=256)
-            
-        model = model.to(DEVICE)
+            model = FQBNeck(feature_dim=256, latent_dim=256)    
+            model = model.to(DEVICE)
         
         optimizer = optim.Adam(model.parameters(), lr=LR)
         scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
@@ -117,14 +116,12 @@ def main():
         
         #Test model
         print(f"Testing {args.model_name}")
-        model = torch.load(file_path, weights_only=False)
-        model = model.to(DEVICE)
+        model = torch.load(file_path, weights_only=False, map_location=DEVICE)
         results = test_model(model, test_loader, DEVICE)
         
     elif args.process == "testing":
         print(f"Testing {args.model_name}")
-        model = torch.load(file_path, weights_only=False)
-        model = model.to(DEVICE)
+        model = torch.load(file_path, weights_only=False, map_location=DEVICE)
         results = test_model(model, test_loader, DEVICE)
         
     #Show and save results
