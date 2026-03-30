@@ -9,7 +9,7 @@ import torch.optim as optim
 
 from pathlib import Path
 
-from scripts.data.image_loaders import create_loaders
+from scripts.data.image_loaders import create_loaders, create_train_loader
 from scripts.models.full_model import FQBNeck
 from scripts.training.training import train_model
 from scripts.training.validation import validate_model
@@ -74,7 +74,9 @@ def main():
     with open(config_path) as file:
         config = yaml.safe_load(file)
     
-    train_loader, val_loader, test_loader = create_loaders(config, dataset_path)
+    #train_loader, val_loader, test_loader = create_loaders(config, dataset_path)
+    train_loader = create_train_loader(config, dataset_path)
+    val_loader, test_loader = create_loaders(config, dataset_path)
     
     #Either do training or testing
     if args.process == "training":
@@ -95,7 +97,8 @@ def main():
             model = model.to(DEVICE)
         
         optimizer = optim.Adam(model.parameters(), lr=LR)
-        scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
+        #scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHs, eta_min=1e-6)
+        scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=EPOCHS/2, T_mult=2, eta_min=1e-6)
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
