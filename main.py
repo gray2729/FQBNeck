@@ -87,7 +87,7 @@ def main():
         save_configs(config_path, results_path)
         
         logger = result_logger(results_path)
-        best_val_loss = float('inf')
+        best_val_acc = 0
         
         if file_path.exists():
             print(f"Model found, loading {args.model_name}.pt")
@@ -98,7 +98,7 @@ def main():
         
         optimizer = optim.Adam(model.parameters(), lr=LR)
         #scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHs, eta_min=1e-6)
-        scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=int(EPOCHS/3), T_mult=2, eta_min=1e-6)
+        scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=int(0.5*EPOCHS), T_mult=2, eta_min=1e-6)
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
@@ -112,9 +112,9 @@ def main():
             print(f"Epoch {epoch+1}: Train. loss = {train_loss:.4f}, Train. acc = {train_acc:.4f}, Val. loss = {val_loss:.4f}, Val. acc = {val_acc:.4f}")
             logger.save_losses(epoch, train_loss, train_acc, val_loss, val_acc)
             
-            if val_loss < best_val_loss:
-                print (f"New best: {val_loss:.4f}, saving model as {args.model_name}.pt")
-                best_val_loss = val_loss
+            if val_acc > best_val_acc:
+                print (f"New best: {val_acc:.4f}, saving model as {args.model_name}.pt")
+                best_val_acc = val_acc
                 torch.save(model, file_path)
         
         #Test model

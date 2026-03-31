@@ -15,9 +15,7 @@ class TrainImageData(Dataset):
         self.transform = transforms.Compose([
             transforms.Resize((image_size, image_size)),
             transforms.RandomHorizontalFlip(p=0.5),
-            transforms.RandomVerticalFlip(p=0.2),
-            transforms.RandomCrop(image_size, padding=16),
-            transforms.ColorJitter(brightness=0.2, contrast=0.2)
+            transforms.RandomVerticalFlip(p=0.2)
         ])
         
     def load_paths(self):
