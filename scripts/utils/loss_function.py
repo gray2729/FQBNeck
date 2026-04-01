@@ -2,7 +2,6 @@ import torch.nn.functional as funct
 
 def VIB_loss(logits, target, mu, logvar, beta=0.001):
     #classification loss
-    #ce_loss = funct.cross_entropy(logits, target)
     ce_loss = funct.cross_entropy(logits, target)
     
     #kl divergence
