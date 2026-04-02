@@ -75,6 +75,25 @@ FQBNeck/
 
 ## Usage
 
+### Datasets
+
+The datasets used for were sampled from the ForenSyth and GenImage datasets and can be obtained from this [drive](https://drive.google.com/drive/u/3/folders/1nzhauhhMD-LWzZRUaG3Wbnsj8a7FBRVQ). 
+
+To properly run the dataset, unzip and place the datasets within the datasets folder. If you want to run this project on your own dataset, make sure the dataset is formatted as follows:
+
+```
+dataset
+    ├── Training/
+    |   ├── real/
+    |   └── fake/
+    ├── Validation/
+    |   ├── real/
+    |   └── fake/
+    └── Testing/
+        ├── real/
+        └── fake/
+```
+
 ## Demo
 
 Run main.py script with the following command-line arguments to train a model on the specific demo dataset (Hybrid_Sample) using the demo configs (sample_configs):
