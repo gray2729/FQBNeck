@@ -77,7 +77,7 @@ FQBNeck/
 
 ### Dataset
 
-The Hybrid dataset used for this project was sampled from the ForenSyth and GenImage datasets and can be obtained from this [drive](https://drive.google.com/drive/u/3/folders/1nzhauhhMD-LWzZRUaG3Wbnsj8a7FBRVQ). 
+The Hybrid dataset used for this project was sampled from the ForenSynth and GenImage datasets and can be obtained from this [drive](https://drive.google.com/drive/u/3/folders/1nzhauhhMD-LWzZRUaG3Wbnsj8a7FBRVQ). 
 
 To properly run the dataset, unzip and place the dataset within the datasets folder. If you want to run this project on your own datasets, make sure each dataset is formatted exactly as follows:
 
@@ -239,6 +239,22 @@ python main.py --dataset Hybrid_Sample --config sample_configs --process testing
 
 ## Results and Visualization
 
+**Accuracy of Baselines and FBQNeck**
+
+| Dataset  | Majority | LogReg | LogReg + FFT | ResNet | ResNet + FFT | FQBNeck (ForenSynth) | FQBNeck (GenImage) | FQBNeck (Hybrid) | 
+|:------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| ForenSynth      | 0.500 | 0.675 | 0.707 | 0.863 | 0.835 | 0.746 | 0.464 | 0.700
+| GenImage        | 0.500 | 0.775 | 0.794 | 0.934 | 0.904 | 0.534 | 0.875 | 0.607
+| Hybrid          | 0.500 | 0.657 | 0.690 | 0.831 | 0.791 | 0.734 | 0.789 | 0.756
+
+**Average Precision of Baselines and FQBNeck**
+
+| Dataset  | Majority | LogReg | LogReg + FFT | ResNet | ResNet + FFT | FQBNeck (ForenSynth) | FQBNeck (GenImage) | FQBNeck (Hybrid) | 
+|:------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| ForenSynth      | 0.499 | 0.718 | 0.754 | 0.927 | 0.926 | 0.748 | 0.471 | 0.700
+| GenImage        | 0.450 | 0.851 | 0.866 | 0.983 | 0.970 | 0.558 | 0.959 | 0.684
+| Hybrid          | 0.500 | 0.714 | 0.713 | 0.915 | 0.875 | 0.785 | 0.886 | 0.828
+
 ## Citation
 
 If you use this code in your research, please cite:
@@ -250,6 +266,30 @@ If you use this code in your research, please cite:
     author="Isaac Gray",
     institution="Rochester Institute of Technology",
     year="2026"
+}
+```
+
+## Acknowledgments
+
+This project used the ForenSynth dataset by Wang et al. and the GenImage dataset by Zhu et al to create the Hybrid dataset. The ForenSynth dataset was obtained [here](https://github.com/peterwang512/CNNDetection?tab=readme-ov-file) and the GenImage dataset was obtained [here](https://github.com/GenImage-Dataset/GenImage)
+
+Below is the citation to their works:
+
+```
+@inproceedings{wang2019cnngenerated,
+  title={CNN-generated images are surprisingly easy to spot...for now},
+  author={Wang, Sheng-Yu and Wang, Oliver and Zhang, Richard and Owens, Andrew and Efros, Alexei A},
+  booktitle={CVPR},
+  year={2020}
+}
+
+@misc{zhu2023genimage,
+      title={GenImage: A Million-Scale Benchmark for Detecting AI-Generated Image}, 
+      author={Mingjian Zhu and Hanting Chen and Qiangyu Yan and Xudong Huang and Guanyu Lin and Wei Li and Zhijun Tu and Hailin Hu and Jie Hu and Yunhe Wang},
+      year={2023},
+      eprint={2306.08571},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV}
 }
 ```
 
