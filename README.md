@@ -102,7 +102,7 @@ To check if there are any corrupted/damaged files within the dataset which might
 
 ```
 cd scripts\utils
-python check_corruptions --dataset Dataset_name
+python check_corruptions.py --dataset Dataset_name
 ```
 
 Replace Dataset_name with the name of the dataset folder you want to check.
@@ -110,7 +110,7 @@ Replace Dataset_name with the name of the dataset folder you want to check.
 Example:
 
 ``
-python check_corruptions --dataset Hybrid
+python check_corruptions.py --dataset Hybrid
 ``
 
 #### Data Visualization
@@ -119,14 +119,14 @@ To produce visualizations of the dataset, run image_visualizations.py
 
 ```
 cd scripts\utils
-python data_visualizations --dataset Dataset_name --visualization plot_type
+python image_visualizations.py --dataset Dataset_name --visualization plot_type
 ```
 Replace Datset_name with the name of the dataset folder you want to produce the plots for and plot_type with either **Distribution** or **Sample** to produce a plot of that type.
 
 Example:
 
 ```
-python data_visualizations --dataset Hybrid --visualization Distribution
+python image_visualizations.py --dataset Hybrid --visualization Distribution
 ```
 
 This will produce a sample/Distribution plot, which will be saved in the figures folder.
@@ -170,7 +170,7 @@ To produce the loss/accuracy plots for training, run loss_visualizations.py.
 
 ```
 cd scripts\utils
-python loss_visualizations --model Model_name --visualization plot_type
+python loss_visualizations.py --model Model_name --visualization plot_type
 ``` 
 
 Replace Model_name with the name of the model you want to produce the plots for and plot_type with either **Loss** or **Accuracy** to produce a plot of that type.
@@ -178,7 +178,7 @@ Replace Model_name with the name of the model you want to produce the plots for 
 Example:
 
 ```
-python loss_visualizations --model fqbneck_hybrid --visualization Loss
+python loss_visualizations.py --model fqbneck_hybrid --visualization Loss
 ```
 
 This will produce a loss/accuracy plot, which will be saved in the figures folder.
