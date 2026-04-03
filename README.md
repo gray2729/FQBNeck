@@ -59,7 +59,7 @@ FQBNeck/
     │   ├── FQBNeck_Hybrid.pt       # Saved individual model
     │   └── ..
     ├── scripts/          # Scripts
-    │   ├── configs/                # Configs for Training
+    │   ├── configs/                # Configs for Training/Testing
     |   |   ├── configs.yaml
     |   |   └── ...
     │   ├── data/                   # Image data loading scripts
@@ -75,11 +75,11 @@ FQBNeck/
 
 ## Usage
 
-### Datasets
+### Dataset
 
-The datasets used for were sampled from the ForenSyth and GenImage datasets and can be obtained from this [drive](https://drive.google.com/drive/u/3/folders/1nzhauhhMD-LWzZRUaG3Wbnsj8a7FBRVQ). 
+The Hybrid dataset used for this project was sampled from the ForenSyth and GenImage datasets and can be obtained from this [drive](https://drive.google.com/drive/u/3/folders/1nzhauhhMD-LWzZRUaG3Wbnsj8a7FBRVQ). 
 
-To properly run the dataset, unzip and place the datasets within the datasets folder. If you want to run this project on your own dataset, make sure the dataset is formatted as follows:
+To properly run the dataset, unzip and place the dataset within the datasets folder. If you want to run this project on your own datasets, make sure each dataset is formatted exactly as follows:
 
 ```
 dataset
@@ -93,6 +93,126 @@ dataset
         ├── real/
         └── fake/
 ```
+
+To check if there are any corrupted/damaged files within the dataset which might cause issues when the images are loaded, run check_corruptions.py
+
+```
+cd scripts\utils
+python check_corruptions --dataset Dataset_name
+```
+
+Replace Dataset_name with the name of the dataset folder you want to check.
+
+Example:
+
+``
+python check_corruptions --dataset Hybrid
+``
+
+**Data Visualization**
+
+To produce visualizations of the dataset, run image_visualizations.py
+
+```
+cd scripts\utils
+python data_visualizations --dataset Dataset_name --visualization plot_type
+```
+Replace Datset_name with the name of the dataset folder you want to produce the plots for and plot_type with either **Distribution** or **Sample** to produce a plot of that type.
+
+Example:
+
+```
+python data_visualizations --dataset Hybrid --visualization Distribution
+```
+
+This will produce a sample/Distribution plot, which will be saved in the figures folder.
+
+### Configs
+
+This project requires there to be a config.yaml file in the configs folder for image loading and the training process. The config.yaml file should contain **batch_size**, **image_size**, **num_workers**, **epochs**, **lr**, and **beta**.
+
+ Example:
+
+```
+batch_size: 32      
+image_size: 224
+num_workers: 4
+epochs: 50
+lr: 0.001
+beta: 0.00001
+```
+
+### Training
+
+**Direct Python Training Command:**
+
+```
+python main.py --dataset Dataset_name --config Configs_name --process training --model_name Model_name
+```
+
+To train, run main.py with the training argument. Replace Dataset_name with name of the dataset folder you want to train the model on, Configs_name with the name of the config file, and Model_name with the name that you want to save the model under. 
+
+Example:
+
+```
+python main.py --dataset Hybrid --config configs --process training --model_name fqbneck_hybrid
+```
+
+This will training a model and evaluate it afterwards, saving the model in the saved_models folder and the losses and metrics in the results folder. It will also save a copy of the configs used to train the model.
+
+**Loss Visualizations**
+
+To produce the loss/accuracy plots for training, run loss_visualizations.py.
+
+```
+cd scripts\utils
+python loss_visualizations --model Model_name --visualization plot_type
+``` 
+
+Replace Model_name with the name of the model you want to produce the plots for and plot_type with either **Loss** or **Accuracy** to produce a plot of that type.
+
+Example:
+
+```
+python loss_visualizations --model fqbneck_hybrid --visualization Loss
+```
+
+This will produce a loss/accuracy plot, which will be saved in the figures folder.
+
+### Testing
+
+**Direct Python Testing Command:**
+
+```
+python main.py --dataset Dataset_name --config Configs_name --process testing --model_name Model_name
+```
+
+To test, run main.py with the training argument. Replace Dataset_name with name of the dataset folder you want to evaluate the model with, Configs_name with the name of the config file, and Model_name with the name of the model that you want to evaluate. 
+
+Example:
+
+```
+python main.py --dataset Hybrid --config configs --process testing --model_name fqbneck_hybrid
+```
+
+This will evaluate the model, saving the metrics in the results folder.
+
+### Baselines
+
+To run the baselines used in this project, run baselines.py
+
+```
+python baseline.py --dataset dataset_path --model model_type
+```
+
+Replace dataset_path with the path to the dataset folder you want to train the model on and replace model_type with **majority**, **logreg_rgb**, **logref_fft**, **resnet_rgb**, **resnet_fft**, or **resnet_rgb_fft**.
+
+Example:
+```
+python baseline.py --dataset datasets\Hybrid --model resnet_fft
+```
+
+This will train and validate a model of the given type on the given dataset, printing the metrics out in the terminal. 
 
 ## Demo
 
@@ -109,7 +229,7 @@ Likewise, run main.py script with the following command-line arguments to test a
 python main.py --dataset Hybrid_Sample --config sample_configs --process testing --model_name fqbneck_hybrid
 ```
 
-This will print the metrics out in the terminal as well as save the metrics as metrics.json in results folder within the corresponding model folder.
+This will print the metrics out in the terminal as well as save the metrics as metrics.json in results folder.
 
 You can test any model trained by replacing the model name in the command-line arguments above with the desired model. Note that the desired model has to be in the saved_dataset folder. For example, to test model trained for the demo, replace fqbneck_hybrid above with fbqneck_demo as such:
 

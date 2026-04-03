@@ -98,18 +98,18 @@ def main():
                         help="dataset name")
     parser.add_argument("--visualization", type=str, required=True,
                         choices=[
-                            "distribution",
-                            "sample"
+                            "Distribution",
+                            "Sample"
                         ])
     parser.add_argument("--seed", type=int, default=64)
     args = parser.parse_args()
     
     random.seed(args.seed)
     
-    if args.visualization == "distribution":
+    if args.visualization == "Distribution":
         plot_distribution(args.dataset)
         
-    elif args.visualization == "sample":
+    elif args.visualization == "Sample":
         show_dataset_samples(args.dataset)
 
 if __name__ == "__main__":
