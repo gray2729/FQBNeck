@@ -261,9 +261,9 @@ python main.py --dataset Hybrid_Sample --config sample_configs --process testing
 
 | Dataset  | Majority | LogReg | LogReg + FFT | ResNet | ResNet + FFT | FQBNeck (ForenSynth) | FQBNeck (GenImage) | FQBNeck (Hybrid) | 
 |:------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| ForenSynth      | 0.500 | 0.675 | 0.707 | 0.863 | 0.835 | 0.746 | 0.464 | 0.700
-| GenImage        | 0.500 | 0.775 | 0.794 | 0.934 | 0.904 | 0.534 | 0.875 | 0.607
-| Hybrid          | 0.500 | 0.657 | 0.690 | 0.831 | 0.791 | 0.734 | 0.789 | 0.756
+| ForenSynth      | 0.500 | 0.675 | 0.707 | 0.863 | 0.835 | 0.746 | 0.534 | 0.734 
+| GenImage        | 0.500 | 0.775 | 0.794 | 0.934 | 0.904 | 0.464 | 0.875 | 0.789
+| Hybrid          | 0.500 | 0.657 | 0.690 | 0.831 | 0.791 | 0.700 | 0.607 | 0.756
 
 *Table 1: Accuracy of each baseline method and our method when evaluated on each dataset. For FQBNeck, we trained it on the dataset within the parentheses.*
 
@@ -271,9 +271,9 @@ python main.py --dataset Hybrid_Sample --config sample_configs --process testing
 
 | Dataset  | Majority | LogReg | LogReg + FFT | ResNet | ResNet + FFT | FQBNeck (ForenSynth) | FQBNeck (GenImage) | FQBNeck (Hybrid) | 
 |:------------- |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| ForenSynth      | 0.499 | 0.718 | 0.754 | 0.927 | 0.926 | 0.748 | 0.471 | 0.700
-| GenImage        | 0.450 | 0.851 | 0.866 | 0.983 | 0.970 | 0.558 | 0.959 | 0.684
-| Hybrid          | 0.500 | 0.714 | 0.713 | 0.915 | 0.875 | 0.785 | 0.886 | 0.828
+| ForenSynth      | 0.499 | 0.718 | 0.754 | 0.927 | 0.926 | 0.748 | 0.558 | 0.785
+| GenImage        | 0.450 | 0.851 | 0.866 | 0.983 | 0.970 | 0.471 | 0.959 | 0.886
+| Hybrid          | 0.500 | 0.714 | 0.713 | 0.915 | 0.875 | 0.700 | 0.684 | 0.828
 
 *Table 2: Average precision of each baseline method and our method when evaluated on each dataset. For FQBNeck, we again trained it on the dataset within the parentheses.*
 ## Citation
