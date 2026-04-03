@@ -25,24 +25,6 @@ def set_seed(seed=64):
 
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
-        
-def create_directory(model_name):
-    index = ''
-    while True:
-        try:
-            Path(f"results/{model_name}" + index).mkdir()
-            break
-        except FileExistsError:
-            if index:
-                index = "("+str(int(index[1:-1])+1)+")"
-            else:
-                index = "(1)"
-            pass
-    
-    results_path = Path(f"results/{model_name}"+index)
-    print(f"Created directory: {results_path}")
-    
-    return results_path
 
 def main():
     parser = argparse.ArgumentParser()
@@ -67,7 +49,7 @@ def main():
     
     #Set file paths
     file_path = Path(f"saved_models/{args.model_name}.pt")
-    results_path = create_directory(args.model_name)
+    results_path = Path(f"results/{args.model_name}")
     
     #Load image data
     config_path = Path(f"scripts/configs/{args.config}.yaml")
@@ -131,7 +113,7 @@ def main():
     for k, v in results.items():
         print(f"{k}: {v:.4f}")
         
-    save_metrics(results, results_path)
+    save_metrics(results, results_path, args.dataset)
     
 if __name__ == "__main__":
     main()

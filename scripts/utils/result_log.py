@@ -2,8 +2,8 @@ import json
 import csv
 import shutil
 
-def save_metrics(results, folder_path):
-    save_path = folder_path / "metrics.json"
+def save_metrics(results, folder_path, dataset):
+    save_path = folder_path / f"{dataset}_metrics.json"
     
     with open(save_path, "w") as file:
         json.dump(results, file, indent = 4)
