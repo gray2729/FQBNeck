@@ -49,7 +49,9 @@ def main():
     
     #Set file paths
     file_path = Path(f"saved_models/{args.model_name}.pt")
+    
     results_path = Path(f"results/{args.model_name}")
+    results_path.mkdir(exist_ok=True)
     
     #Load image data
     config_path = Path(f"scripts/configs/{args.config}.yaml")
