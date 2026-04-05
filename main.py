@@ -82,7 +82,7 @@ def main():
         
         optimizer = optim.Adam(model.parameters(), lr=LR)
         #scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=EPOCHs, eta_min=1e-6)
-        scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=int(EPOCHS/3), T_mult=2, eta_min=1e-6)
+        scheduler = optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=int(EPOCHS/2.5), T_mult=2, eta_min=1e-6)
         
         print(f"Training {args.model_name}")
         for epoch in range(EPOCHS):
