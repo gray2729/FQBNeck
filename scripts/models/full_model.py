@@ -14,7 +14,7 @@ class FQBNeck(nn.Module):
         
         self.fft = FFT()
         #self.rgb_cnn = CNN(input_channel=3, out_channel=latent_dim)
-        self.rgb_cnn = ResNet(output_dim=3, pretrained=True)
+        self.rgb_cnn = ResNet(output_channel=latent_dim, pretrained=True)
         self.fft_cnn = CNN(input_channel=6, out_channel=feature_dim)
         self.vib = VIB(feature_dim, latent_dim)
         self.mlp = MLP(latent_dim, num_class)
