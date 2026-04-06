@@ -20,7 +20,7 @@ def evaluate_predictions(true, pred, probs):
         "avg precision": average_precision_score(true, probs),
         "auc": auc,
         "confusion mat": confusion_matrix(true, pred).tolist(),
-        "norm confusion mat": confusion_matrix(true, pred, normalize=True).tolist()
+        "norm confusion mat": confusion_matrix(true, pred, normalize='true').tolist()
         }
     
     return results
