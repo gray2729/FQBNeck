@@ -113,7 +113,14 @@ def main():
         
     #Show and save results
     for k, v in results.items():
-        print(f"{k}: {v:.4f}")
+        if isinstance(v, (int, float)):
+            print(f"{k}: {v:.4f}")
+        elif isinstance(v, list):
+            print(f"{k}:")
+            for row in v:
+                print(row)
+        else:
+            print(f"{k}: {v}")
         
     save_metrics(results, results_path, args.dataset)
     

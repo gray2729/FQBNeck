@@ -3,7 +3,8 @@ from sklearn.metrics import (accuracy_score,
                              recall_score, 
                              f1_score, 
                              average_precision_score, 
-                             roc_auc_score)
+                             roc_auc_score,
+                             confusion_matrix)
 
 def evaluate_predictions(true, pred, probs):
     try:
@@ -17,7 +18,9 @@ def evaluate_predictions(true, pred, probs):
         "recall": recall_score(true, pred, zero_division=0),
         "f1": f1_score(true, pred, zero_division=0),
         "avg precision": average_precision_score(true, probs),
-        "auc": auc
+        "auc": auc,
+        "confusion mat": confusion_matrix(true, pred).tolist(),
+        "norm confusion mat": confusion_matrix(true, pred, normalize=True).tolist()
         }
     
     return results
