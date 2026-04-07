@@ -10,8 +10,10 @@ def train_model(model, train_loader, optimizer, device, beta = 0.001):
         imgs, labels = imgs.to(device), labels.to(device)
         
         optimizer.zero_grad()
-        logits, mu, logvar = model(imgs)
-        loss = VIB_loss(logits, labels, mu, logvar, beta)
+        #logits, mu, logvar = model(imgs)
+        logits, fft_mu, fft_logvar, rgb_mu, rgb_logvar = model(imgs)
+        #loss = VIB_loss(logits, labels, mu, logvar, beta)
+        loss = VIB_loss(logits, labels, fft_mu, fft_logvar, rgb_mu, rgb_logvar, beta)
         
         preds = logits.argmax(dim=1)
         
