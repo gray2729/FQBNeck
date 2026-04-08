@@ -11,10 +11,8 @@ def validate_model(model, val_loader, device, beta = 0.001):
         for imgs, labels in val_loader:
             imgs, labels = imgs.to(device), labels.to(device)
             
-            #logits, mu, logvar = model(imgs)
-            logits, fft_mu, fft_logvar, rgb_mu, rgb_logvar = model(imgs)
-            #loss = VIB_loss(logits, labels, mu, logvar, beta)
-            loss = VIB_loss(logits, labels, fft_mu, fft_logvar, rgb_mu, rgb_logvar, beta)
+            logits, mu, logvar = model(imgs)
+            loss = VIB_loss(logits, labels, mu, logvar, beta)
             
             preds = logits.argmax(dim=1)
             

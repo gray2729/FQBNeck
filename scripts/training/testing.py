@@ -12,7 +12,7 @@ def test_model(model, test_loader, device):
         for imgs, labels in test_loader:
             imgs, labels = imgs.to(device), labels.to(device)
             
-            logits, _, _, _, _ = model(imgs)
+            logits, _, _ = model(imgs)
             
             probs = logits.softmax(dim=1)
             preds = logits.argmax(dim=1)
