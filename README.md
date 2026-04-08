@@ -21,7 +21,7 @@ This project aims to distinguish between real and AI-generated images using a mu
 * scikit-learn = 1.7.1 
 * matplotlib = 3.10.8 
 * pandas = 2.3.3
-* pytorch-cuda = 12.1
+* pytorch-cuda = 13.1
 
 ## Install
 
