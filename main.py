@@ -77,7 +77,7 @@ def main():
             print(f"Model found, loading {args.model_name}.pt")
             model = torch.load(file_path, weights_only=False, map_location=DEVICE)
         else:   
-            model = FQBNeck(feature_dim=256, latent_dim=256)    
+            model = FQBNeck(feature_dim=256, latent_dim=128)    
             model = model.to(DEVICE)
         
         optimizer = optim.Adam(model.parameters(), lr=LR)
