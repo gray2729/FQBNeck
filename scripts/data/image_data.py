@@ -35,9 +35,11 @@ class TrainImageData(Dataset):
     def __getitem__(self, idx):
         path, label = self.samples[idx]
 
-        # load image as tensor        
-        with Image.open(path) as img:
-            img = img.convert("RGB")
+        # load image as tensor  
+        try:
+            img = Image.open(path).convert("RGB")
+        except OSError:
+            return self.__getitem__((idx + 1) % len(self.samples))
             
         img = transforms.functional.to_tensor(img)
 
