@@ -1,6 +1,0 @@
-batch_size: 32
-image_size: 224
-num_workers: 4
-epochs: 50
-lr: 0.001
-beta: 0.00001
