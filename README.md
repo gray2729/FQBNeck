@@ -245,13 +245,13 @@ python main.py --dataset Hybrid_Sample --config sample_configs --process testing
 
 ### Loss Curve
 
-![Loss Curve](figures/loss_curves/fqbneck_hybrid_Loss_Curve.png)
+![Loss Curve](figures/loss_curves/fqbneck_hybrid_model_Loss_Curve.png)
 
 *Figure 2: Training loss curve when FQBNeck was trained for 50 epochs on the Hybrid dataset*
 
 ### Accuracy Curve
 
-![Accuracy Curve](figures/loss_curves/fqbneck_hybrid_Accuracy_Curve.png)
+![Accuracy Curve](figures/loss_curves/fqbneck_hybrid_model_Accuracy_Curve.png)
 
 *Figure 3: Accuracy curve when FQBNeck was trained for 50 epochs on the Hybrid dataset*
 
